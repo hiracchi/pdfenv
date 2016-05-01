@@ -7,7 +7,7 @@ checkout()
     if [ ! -d "${WORKDIR}/OpenBLAS" ]; then
         git clone git://github.com/xianyi/OpenBLAS.git ${WORKDIR}/OpenBLAS
     else
-        (cd OpenBLAS; git pull)
+        (cd ${WORKDIR}/OpenBLAS; git pull)
     fi
 }
 

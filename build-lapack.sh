@@ -20,6 +20,7 @@ build()
 
     cd ${WORKDIR}/lapack-${LAPACK_VER}
     make clean
+    rm CMakeCache.txt
 
     CMAKE_ARGS=""
     if [ x${USE_OPENBLAS} = xyes ]; then

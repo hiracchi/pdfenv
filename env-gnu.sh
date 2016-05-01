@@ -4,6 +4,9 @@ SRCDIR=./archives
 WORKDIR=./build
 MY_PREFIX=${HOME}/local/gnu
 
+# USE_OPENBLAS=yes
+USE_OPENBLAS=no
+
 export CC=gcc
 export CFLAGS="-fopenmp"
 export CXX=g++
@@ -14,7 +17,6 @@ export OMPOPT="-fopenmp"
 
 export OPENBLAS_TARGET="SANDYBRIDGE"
 
-USE_OPENBLAS=yes
 
 if [ x${USE_OPENBLAS} = xyes ]; then
     export BLAS_LIBRARIES="${HOME}/local/gnu/lib/libopenblas.a"

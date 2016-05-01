@@ -7,7 +7,7 @@ IFS=$(printf ' \t\n_'); IFS=${IFS%_}
 export IFS LC_ALL=C LANG=C PATH
 
 source ./utils/utils.sh
-source ./env.sh
+#source ./env.sh
 
 # check workdir
 if [ ! -d ${WORKDIR} ]; then
