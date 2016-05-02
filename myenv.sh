@@ -252,7 +252,28 @@ build_scalapack()
 }
 
 
-build_blas
-build_mpi
-build_scalapack
+if [ x"${ARGS}" = x ]; then
+    ARGS="blas mpi scalapack"
+fi
+
+for target in ${ARGS}; do
+    case ${target} in
+        'blas')
+            build_blas
+            ;;
+
+        'mpi')
+            build_mpi
+            ;;
+
+        'scalapack')
+            build_scalapack
+            ;;
+
+        *)
+            echo "unknown build target: ${target}. continue."
+            ;;
+    esac
+done
+
 echo "done."
