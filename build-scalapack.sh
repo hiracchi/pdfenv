@@ -20,7 +20,9 @@ build()
 
     cd ${WORKDIR}/scalapack-${SCALAPACK_VER}
     make clean
-    rm CMakeCache.txt
+    if [ -f CMakeCache.txt ]; then
+        rm CMakeCache.txt
+    fi
     cmake -DCMAKE_INSTALL_PREFIX="${MY_MPI_PREFIX}" \
           -DCMAKE_C_COMPILER="${CC}" \
           -DCMAKE_C_FLAGS="${CFLAGS}" \
