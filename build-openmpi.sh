@@ -2,9 +2,9 @@
 
 source build-common.sh
 
-OPENMPI_VER="1.10.2"
+OPENMPI_VER="1.10.3"
 CONFIG_OPT="\
- --prefix=${MY_MPI_PREFIX} \
+ --prefix=${MY_MPI_PREFIX}-${OPENMPI_VER} \
  --without-memory-manager \
  --enable-static \
  --disable-dlopen \
@@ -37,7 +37,17 @@ build()
     make install 2>&1 | tee out.make_install
 }
 
+link()
+{
+    if [ -d ${MY_MPI_PREFIX} ]; then
+        rm -rf ${MY_MPI_PREFIX}
+    fi
+    ln -sf ${MY_MPI_PREFIX}-${OPENMPI_VER} ${MY_MPI_PREFIX}
+}
 
 # MAIN
 download
 build
+link
+
+

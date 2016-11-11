@@ -2,7 +2,7 @@
 
 source build-common.sh
 
-LAPACK_VER=3.6.0
+LAPACK_VER=3.6.1
 
 download()
 {
@@ -38,7 +38,8 @@ build()
     make install 2>&1 | tee out.make_install
 }
 
-
 # MAIN
 download
 build
+link
+
