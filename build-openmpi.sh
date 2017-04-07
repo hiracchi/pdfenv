@@ -2,13 +2,14 @@
 
 source build-common.sh
 
-OPENMPI_VER="1.10.3"
+OPENMPI_VER="1.10.5"
 CONFIG_OPT="\
  --prefix=${MY_MPI_PREFIX}-${OPENMPI_VER} \
- --without-memory-manager \
  --enable-static \
  --disable-dlopen \
 "
+# --without-memory-manager
+
 
 download()
 {
