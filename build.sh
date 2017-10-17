@@ -20,7 +20,7 @@ usage()
     echo "  -h, --help"
     echo "  -c, --compiler COMPILER [gnu, intel, pgi]"
     echo "  -l, --lib      LINEAR ALGEBRA PACKAGE [netlib, openblas]"
-    echo "  -m, --mpi      MPI PACKAGE [openmpi, mpich]"
+    echo "  -m, --mpi      MPI PACKAGE [openmpi, openmpi2, mpich]"
 }
 
 ARGS=""
@@ -117,6 +117,7 @@ env_comp_gnu()
 env_libblas_netlib()
 {
     export USE_OPENBLAS=no
+    export BLAS_DIST=netlib
     export BLAS_LIBRARIES=${HOME}/local/gnu/lib/libblas.a
     export LAPACK_LIBRARIES=${HOME}/local/gnu/lib/liblapack.a
 }
@@ -124,6 +125,7 @@ env_libblas_netlib()
 env_libblas_openblas()
 {
     export USE_OPENBLAS=yes
+    export BLAS_DIST=openblas
     export OPENBLAS_TARGET="SANDYBRIDGE"
     export BLAS_LIBRARIES="${HOME}/local/gnu/lib/libopenblas.a"
     export LAPACK_LIBRARIES="${HOME}/local/gnu/lib/libopenblas.a"
@@ -140,6 +142,14 @@ env_mpi_mpich()
 env_mpi_openmpi()
 {
     export MY_MPI_PREFIX="${MY_PREFIX}/openmpi"
+    export MPI_BASE_DIR="${MY_MPI_PREFIX}"
+    export MPICC="${MY_MPI_PREFIX}/bin/mpicc"
+    export MPIFC="${MY_MPI_PREFIX}/bin/mpif90"
+}
+
+env_mpi_openmpi2()
+{
+    export MY_MPI_PREFIX="${MY_PREFIX}/openmpi2"
     export MPI_BASE_DIR="${MY_MPI_PREFIX}"
     export MPICC="${MY_MPI_PREFIX}/bin/mpicc"
     export MPIFC="${MY_MPI_PREFIX}/bin/mpif90"
@@ -181,6 +191,9 @@ case ${ARG_L} in
 esac
 
 case ${ARG_M} in
+    'openmpi2')
+        env_mpi_openmpi2
+        ;;
     'openmpi')
         env_mpi_openmpi
         ;;
@@ -226,6 +239,10 @@ build_mpi()
     echo ">>>> MPI"
     cd ${CWD}
     case ${ARG_M} in
+        'openmpi2')
+            ./build-openmpi2.sh
+            ;;
+
         'openmpi')
             ./build-openmpi.sh
             ;;
@@ -277,3 +294,4 @@ for target in ${ARGS}; do
 done
 
 echo "done."
+

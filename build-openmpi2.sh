@@ -2,30 +2,25 @@
 
 source build-common.sh
 
-OPENMPI_VER="1.10.5"
+OPENMPI_VER="2.0.1"
 CONFIG_OPT="\
  --prefix=${MY_MPI_PREFIX}-${OPENMPI_VER} \
- --disable-mpirun-prefix-by-default \
- --disable-orterun-prefix-by-default \
- --enable-mpi-thread-multiple \
- --without-openib \
- --with-cuda=no --disable-opencl \
+ --enable-static \
+ --disable-dlopen \
 "
-# --without-memory-manager
-# --enable-static --disable-shared --disable-dlopen
 
 download()
 {
     if [ ! -f "${SRCDIR}/openmpi-${OPENMPI_VER}.tar.bz2" ]; then
         wget -O "${SRCDIR}/openmpi-${OPENMPI_VER}.tar.bz2" \
-             "https://www.open-mpi.org/software/ompi/v1.10/downloads/openmpi-${OPENMPI_VER}.tar.bz2"
-    fi
+             "https://www.open-mpi.org/software/ompi/v2.0/downloads/openmpi-${OPENMPI_VER}.tar.bz2"
+    fi    
 }
 
 build()
 {
     if [ ! -d ${WORKDIR}/openmpi-${OPENMPI_VER} ]; then
-        tar xvj -C "${WORKDIR}" -f "${SRCDIR}/openmpi-${OPENMPI_VER}.tar.bz2"
+        tar xvj -C "${WORKDIR}" -f "${SRCDIR}/openmpi-${OPENMPI_VER}.tar.bz2" 
     fi
 
     cd ${WORKDIR}/openmpi-${OPENMPI_VER}
@@ -53,3 +48,5 @@ link()
 download
 build
 link
+
+

@@ -19,7 +19,9 @@ build()
     fi
 
     cd ${WORKDIR}/lapack-${LAPACK_VER}
-    make clean
+    mkdir build; cd build
+
+    # make clean
     if [ -f CMakeCache.txt ]; then
         rm CMakeCache.txt
     fi
@@ -32,7 +34,7 @@ build()
         -DCMAKE_INSTALL_PREFIX=${MY_PREFIX} \
         -DCMAKE_Fortran_COMPILER=${FC} \
         ${CMAKE_ARGS} \
-        . 2>&1 | tee out.cmake
+        .. 2>&1 | tee out.cmake
 
     make ${MAKE_ARGS_PARALLEL} 2>&1 | tee out.make 
     make install 2>&1 | tee out.make_install

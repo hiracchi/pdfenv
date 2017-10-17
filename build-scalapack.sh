@@ -23,20 +23,23 @@ build()
     if [ -f CMakeCache.txt ]; then
         rm CMakeCache.txt
     fi
-    cmake -DCMAKE_INSTALL_PREFIX="${MY_MPI_PREFIX}" \
+
+    mkdir build; cd build
+    MY_PREFIX=${MY_MPI_PREFIX}.${BLAS_DIST}
+    cmake -DCMAKE_INSTALL_PREFIX="${MY_PREFIX}" \
           -DCMAKE_C_COMPILER="${CC}" \
           -DCMAKE_C_FLAGS="${CFLAGS}" \
           -DCMAKE_Fortran_COMPILER="${FC}" \
           -DCMAKE_Fortran_FLAGS="${FCFLAGS}" \
-          -DMPI_BASE_DIR="${MY_MPI_PREFIX}" \
-          -DMPI_C_LIBRARIES="${MY_MPI_PREFIX}"/lib \
-          -DMPI_C_INCLUDE_PATH="${MY_MPI_PREFIX}"/include \
-          -DMPI_Fortran_LIBRARIES="${MY_MPI_PREFIX}"/lib \
-          -DMPI_Fortran_INCLUDE_PATH="${MY_MPI_PREFIX}"/include \
+          -DMPI_BASE_DIR="${MY_PREFIX}" \
+          -DMPI_C_LIBRARIES="${MY_PREFIX}"/lib \
+          -DMPI_C_INCLUDE_PATH="${MY_PREFIX}"/include \
+          -DMPI_Fortran_LIBRARIES="${MY_PREFIX}"/lib \
+          -DMPI_Fortran_INCLUDE_PATH="${MY_PREFIX}"/include \
           -DUSE_OPTIMIZED_LAPACK_BLAS=1 \
           -DBLAS_LIBRARIES="${BLAS_LIBRARIES}" \
           -DLAPACK_LIBRARIES="${LAPACK_LIBRARIES}" \
-          . 2>&1 | tee out.cmake
+          .. 2>&1 | tee out.cmake
 
     make ${MAKE_ARGS_PARALLEL} 2>&1 | tee out.make
     make install 2>&1 | tee out.make_install
